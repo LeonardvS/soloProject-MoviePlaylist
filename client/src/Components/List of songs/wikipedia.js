@@ -1,24 +1,18 @@
 import React, { useState, useEffect } from 'react';
 
-
-//
 const wtf = require('wtf_wikipedia');
-//
 
 function Wikipedia({ title, setSongs, setArtists }) {
 
   const [wikiUrls, setWikiUrls] = useState();
   const [wikiUrl, setWikiUrl] = useState();
 
-
   useEffect(() => {
     fetch(url)
-      .then(function (response) { return response.json(); })
+      .then(function (response) { return response.json() })
       .then(function (response) { return setWikiUrls(response[3]) })
       .catch(function (error) { console.log(error); });
   }, [])
-
-
 
   let url = "https://en.wikipedia.org/w/api.php";
 
@@ -33,8 +27,7 @@ function Wikipedia({ title, setSongs, setArtists }) {
   url = url + "?origin=*";
   Object.keys(params).forEach(function (key) { url += "&" + key + "=" + params[key]; });
 
-  const conditions = ["soundtrack", "music", "OST", "Music"]
-
+  const conditions = ["soundtrack", "music", "OST", "Music"];
 
   if (wikiUrls && !(wikiUrl)) {
     for (let url of wikiUrls) {
@@ -47,7 +40,7 @@ function Wikipedia({ title, setSongs, setArtists }) {
       return doc.json()
     }).then(doc => {
       for (let section of doc.sections) {
-        if (section.title == "Track listing") return section;
+        if (section.title === "Track listing") return section;
       }
     }).then(data => { if (data.templates) { return data.templates[0] } else return undefined; }
     ).then(data => {
@@ -65,10 +58,8 @@ function Wikipedia({ title, setSongs, setArtists }) {
   }
 
   return (
-    <div className="wiki">
-    </div>
+    <div className="wiki"></div>
   );
-
 }
 
 export default Wikipedia;

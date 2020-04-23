@@ -1,12 +1,11 @@
 import React, { useContext } from 'react';
 import SpotifyContext from '../../SpotifyContext';
-import { Alert } from 'react-alert';
 import {createPlaylist, searchSongs, addSongs} from './SpotifyPlaylistFunctions';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './SpotifyButton.css';
 
-function SpotifyButton({ title, songs}) {
+function SpotifyButton({ title, songs }) {
 
   const spotifyUser = useContext(SpotifyContext);
 
@@ -16,27 +15,27 @@ function SpotifyButton({ title, songs}) {
   const magicHappening = async () => {
     const playlist = await createPlaylist(spotifyUser.spotifyUserId, title, spotifyUser.tokenSpotify )
     const songIds = await searchSongs(songs, spotifyUser.tokenSpotify);
-    const addingSongToPlaylist = await addSongs (songIds, playlist.id, spotifyUser.tokenSpotify);
+    await addSongs (songIds, playlist.id, spotifyUser.tokenSpotify);
     console.log("playlist imported successfully");
     await notify();
   }
 
-  if(spotifyUser.tokenSpotify===undefined) {
+  if(spotifyUser.tokenSpotify === undefined) {
     return(
       <div>
-      <button className="spotifyButton" style={{left: "30px"}} onClick={() => 
+      <button className="spotifyButton" style={{left: "30px"}} onClick={() =>
         {alert('Login Required!')}
-      }> LogIn to your Spotify <br/> account.</button>
-    </div>  
+      }> Log-In to your Spotify <br/> account.</button>
+    </div>
     )
   };
 
   return (
     <div>
       <button className="spotifyButton" style={{left: "60px"}} onClick={magicHappening}> Import playlist <br/>   on Spotify</button>
-    </div>    
+    </div>
   )
-  
+
 }
 
 export default SpotifyButton;
