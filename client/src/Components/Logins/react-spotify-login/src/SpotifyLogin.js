@@ -31,18 +31,18 @@ class GitHubLogin extends Component {
       client_id: clientId,
       scope,
       redirect_uri: redirectUri,
-      response_type: 'token'
+      response_type: 'token',
     });
     const popup = this.popup = PopupWindow.open(
       'spotify-authorization',
       `https://accounts.spotify.com/authorize?${search}`,
-      { height: 1000, width: 600 }
+      { height: 1000, width: 600 },
     );
 
     this.onRequest();
     popup.then(
-      data => this.onSuccess(data),
-      error => this.onFailure(error)
+      (data) => this.onSuccess(data),
+      (error) => this.onFailure(error),
     );
   }
 

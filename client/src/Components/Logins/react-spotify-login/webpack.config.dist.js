@@ -4,38 +4,38 @@ const webpack = require('webpack');
 module.exports = {
   devtool: 'cheap-module-source-map',
   entry: [
-    './src/index.js'
+    './src/index.js',
   ],
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'SpotifyLogin.js',
     libraryTarget: 'umd',
-    library: 'SpotifyLogin'
+    library: 'SpotifyLogin',
   },
   module: {
     rules: [{
       use: 'babel-loader',
       test: /\.js$/,
-      exclude: /node_modules/
+      exclude: /node_modules/,
     }],
   },
   externals: {
-    'react': 'react',
-    'react-dom': 'ReactDOM'
+    react: 'react',
+    'react-dom': 'ReactDOM',
   },
   resolve: {
-    extensions: ['.js']
+    extensions: ['.js'],
   },
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        'NODE_ENV': JSON.stringify('production')
+        NODE_ENV: JSON.stringify('production'),
       },
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: true,
-      debug: false
+      debug: false,
     }),
-    new webpack.optimize.AggressiveMergingPlugin()
-  ]
+    new webpack.optimize.AggressiveMergingPlugin(),
+  ],
 };

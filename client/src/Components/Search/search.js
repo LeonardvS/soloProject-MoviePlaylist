@@ -10,27 +10,31 @@ function Search() {
 
   const submittingSearch = (e) => {
     e.preventDefault();
-    setTriggerSearch(triggerSearch+1);
-    return; 
-  }
+    setTriggerSearch(triggerSearch + 1);
+  };
 
-return (
-  <div className="Search">
-    <form onSubmit = {submittingSearch}>
-      <label>Search: 
-        <input className="search" type='text' onChange = {e=> setSearching(e.target.value)}></input>
-      </label>
-      {/* <button className="searchButton" onClick={submittingSearch}>Search</button> */}
-      <img className="searchIcon" src={iconSearch} onClick={submittingSearch}></img>
-    </form>
-    {!searching && triggerSearch===0 && <p><span role='img' aria-label="up">👆</span> Search a movie up here <span role='img' aria-label="up">👆</span></p>}
-    {triggerSearch!==0 && <Movies searching = {searching} triggerSearch = {triggerSearch}/>}
+  return (
+    <div className="Search">
+      <form onSubmit={submittingSearch}>
+        <label>
+          Search:
+          <input className="search" type="text" onChange={(e) => setSearching(e.target.value)} />
+        </label>
+        {/* <button className="searchButton" onClick={submittingSearch}>Search</button> */}
+        <img className="searchIcon" src={iconSearch} onClick={submittingSearch} />
+      </form>
+      {!searching && triggerSearch === 0 && (
+      <p>
+        <span role="img" aria-label="up">👆</span>
+        {' '}
+        Search a movie up here
+        {' '}
+        <span role="img" aria-label="up">👆</span>
+      </p>
+      )}
+      {triggerSearch !== 0 && <Movies searching={searching} triggerSearch={triggerSearch} />}
     </div>
   );
-
 }
 
 export default Search;
-
-
-

@@ -1,7 +1,6 @@
-'use strict';
 
-var path = require('path');
-var webpack = require('webpack');
+const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   devtool: 'eval',
@@ -14,21 +13,21 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader'
-        }
-      }
-    ]
+          loader: 'babel-loader',
+        },
+      },
+    ],
   },
   output: {
-    filename: 'example/bundle.js'
+    filename: 'example/bundle.js',
   },
   resolve: {
     extensions: ['.js'],
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
   ],
   devServer: {
-    contentBase: './example'
-  }
+    contentBase: './example',
+  },
 };
