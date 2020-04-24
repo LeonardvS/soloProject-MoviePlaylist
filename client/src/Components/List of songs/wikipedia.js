@@ -5,6 +5,7 @@ const wtf = require('wtf_wikipedia');
 function Wikipedia({ title, setSongs, setArtists }) {
   const [wikiUrls, setWikiUrls] = useState();
   const [wikiUrl, setWikiUrl] = useState();
+  const url = `https://en.wikipedia.org/w/api.php?origin=*&action=opensearch&search=${title}&limit=50&namespace=0&format=json`
 
   useEffect(() => {
     fetch(url)
@@ -13,33 +14,25 @@ function Wikipedia({ title, setSongs, setArtists }) {
       .catch((error) => { console.log(error); });
   }, []);
 
-  let url = 'https://en.wikipedia.org/w/api.php';
-
-  const params = {
-    action: 'opensearch',
-    search: title,
-    limit: '50',
-    namespace: '0',
-    format: 'json',
-  };
-
-  url += '?origin=*';
-  Object.keys(params).forEach((key) => { url += `&${key}=${params[key]}`; });
-
   const conditions = ['soundtrack', 'music', 'OST', 'Music'];
 
   if (wikiUrls && !(wikiUrl)) {
     for (const url of wikiUrls) {
-      if (conditions.some((el) => url.includes(el))) return setWikiUrl(url);
+      if (conditions.some((el) => url.includes(el))) {
+        return setWikiUrl(url);
+      }
     }
   }
 
   if (wikiUrl) {
-    wtf.fetch(wikiUrl).then((doc) => doc.json()).then((doc) => {
-      for (const section of doc.sections) {
-        if (section.title === 'Track listing') return section;
-      }
-    }).then((data) => { if (data.templates) { return data.templates[0]; } return undefined; })
+    wtf.fetch(wikiUrl)
+      .then((doc) => doc.json())
+      .then((doc) => {
+        for (const section of doc.sections) {
+          if (section.title === 'Track listing') return section;
+        }
+      })
+      .then((data) => { if (data.templates) { return data.templates[0]; } return undefined; })
       .then((data) => {
         const titles = [];
         const artists = [];

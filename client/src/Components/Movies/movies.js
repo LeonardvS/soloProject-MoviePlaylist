@@ -12,8 +12,6 @@ function Movies({ searching, triggerSearch }) {
     getMovieList(searching).then((data) => setMovies(data));
   }, [triggerSearch]);
 
-  console.log('movies');
-
   return (
     <div>
       <div className="movies">
