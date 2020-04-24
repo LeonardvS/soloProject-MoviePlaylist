@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import SingleMovie from '../Single movie/singleMovie';
-import { getMovieList } from '../../services/apiCalls';
+import { getMovieList } from '../../services/theMovieDbService';
 import './movies.css';
 
 

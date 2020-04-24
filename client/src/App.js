@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Logins from './Components/Logins/Logins';
 import Search from './Components/Search/search';
 import SpotifyContext from './SpotifyContext';
-import { getSpotifyUserId } from './services/apiCalls';
+import { getSpotifyUserId } from './services/spotifyService';
 import Header from './Components/Header/Header';
 
 import './App.css';
@@ -12,7 +12,8 @@ function App() {
   const [spotifyUserId, setSpotifyUserId] = useState();
 
   if (tokenSpotify && !spotifyUserId) {
-    getSpotifyUserId(tokenSpotify).then((user) => setSpotifyUserId(user.id));
+    getSpotifyUserId(tokenSpotify)
+    .then((user) => setSpotifyUserId(user.id));
   }
 
   return (
