@@ -34,8 +34,8 @@ function ListOfSongs({ title }) {
     <div className="listOfSong">
       <ul>
         <p> {`${title} playlist: `} </p>
-        {songs && songs.map((song) => (
-          <li>{`${song}`}</li>
+        {songs && songs.map((song, index) => (
+          <li key={index}>{`${song}`}</li>
         ))}
         {!songs && <p className="noPlaylist">Loading...</p>}
       </ul>
