@@ -48,7 +48,6 @@ async function searchSongs(songs, token) {
     const id = res.tracks.items[0] !== undefined && res.tracks.items[0].id;
     id && result.push(id);
   } 
-  console.log(result);
   return result;
 }
 
@@ -69,9 +68,4 @@ async function addSongs(songsId, playlistId, token) {
   return response.json();
 }
 
-module.exports = {
-  getSpotifyUserId,
-  createPlaylist,
-  searchSongs,
-  addSongs
-}
+module.exports = { getSpotifyUserId, createPlaylist, searchSongs, addSongs }

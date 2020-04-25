@@ -8,7 +8,7 @@ function GetWikiUrls (title) {
     .catch((error) => { console.log(error); });
 }
 
-function GetTitlesAndArtists (url) {
+function GetTitles (url) {
   return wtf.fetch(url)
     .then((doc) => doc.json())
     .then((doc) => {
@@ -21,4 +21,4 @@ function GetTitlesAndArtists (url) {
     });
 }
 
-module.exports = { GetWikiUrls, GetTitlesAndArtists }
+module.exports = { GetWikiUrls, GetTitles }

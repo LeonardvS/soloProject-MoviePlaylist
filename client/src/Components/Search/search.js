@@ -20,7 +20,6 @@ function Search() {
           Search:
           <input className="search" type="text" onChange={(e) => setSearching(e.target.value)} />
         </label>
-        {/* <button className="searchButton" onClick={submittingSearch}>Search</button> */}
         <img className="searchIcon" src={iconSearch} onClick={submittingSearch} />
       </form>
       {!searching && triggerSearch === 0 && (

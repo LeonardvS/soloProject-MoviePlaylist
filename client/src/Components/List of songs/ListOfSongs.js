@@ -1,13 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
-// import SpotifyButton from '../Spotify Button/SpotifyButton';
-import { GetWikiUrls, GetTitlesAndArtists } from '../../services/wikipediaService';
+import { GetWikiUrls, GetTitles } from '../../services/wikipediaService';
 import SpotifyContext from '../../SpotifyContext';
 import { createPlaylist, searchSongs, addSongs } from '../../services/spotifyService';
 import './ListOfSongs.css';
 
 function ListOfSongs({ title }) {
   const [songs, setSongs] = useState();
-  const [artists, setArtists] = useState();
 
   const spotifyUser = useContext(SpotifyContext);
   const conditions = ['soundtrack', 'music', 'OST', 'Music'];
@@ -16,15 +14,12 @@ function ListOfSongs({ title }) {
     const urls = await GetWikiUrls(title);
     for (const url of urls) {
       if (conditions.some((el) => url.includes(el))) {
-        const songsAndArtists = await GetTitlesAndArtists(url)
+        const songs = await GetTitles(url);
         const titles = [];
-        const artists = [];
-        for (const key in songsAndArtists) {
-          if (key.includes('title')) titles.push(songsAndArtists[key]);
-          if (key.includes('extra')) artists.push(songsAndArtists[key]);
+        for (const key in songs) {
+          if (key.includes('title')) titles.push(songs[key]);
         }
         if (titles[0]) { setSongs(titles); }
-        if (artists[0]) { setArtists(artists.slice(1)); }
       }
     }
   }
@@ -49,11 +44,11 @@ function ListOfSongs({ title }) {
         ))}
         {!songs && <p className="noPlaylist">Loading...</p>}
       </ul>
-      {/* <SpotifyButton title={title} songs={songs} /> */}
       <button
         className='add-playlist-to-spotify'
         onClick={addPlaylist}
-      >Export playlist <br/> to Spotify
+      >
+        Export playlist <br/> to Spotify
       </button>
     </div>
   );
