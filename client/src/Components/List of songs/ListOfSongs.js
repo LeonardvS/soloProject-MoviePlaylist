@@ -1,48 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import SpotifyButton from '../Spotify Button/SpotifyButton';
-import Wikipedia from './wikipedia';
+import { GetWikiUrls, GetTitlesAndArtists } from '../../services/wikipediaService';
 import './ListOfSongs.css';
 
 function ListOfSongs({ title }) {
   const [songs, setSongs] = useState();
   const [artists, setArtists] = useState();
 
+  const conditions = ['soundtrack', 'music', 'OST', 'Music'];
 
-  if (songs && typeof (songs[0]) !== 'object') {
-    const dbSongs = [];
-    if (artists) {
-      for (let i = 0; i < songs.length; i++) {
-        dbSongs[i] = { song: songs[i], artist: artists[i] };
-      }
-    } else {
-      for (let i = 0; i < songs.length; i++) {
-        dbSongs[i] = { song: songs[i], artist: undefined };
+  async function getWikiUrls () {
+    const urls = await GetWikiUrls(title);
+    for (const url of urls) {
+      if (conditions.some((el) => url.includes(el))) {
+        const songsAndArtists = await GetTitlesAndArtists(url)
+        const titles = [];
+        const artists = [];
+        for (const key in songsAndArtists) {
+          if (key.includes('title')) titles.push(songsAndArtists[key]);
+          if (key.includes('extra')) artists.push(songsAndArtists[key]);
+        }
+        if (titles[0]) { setSongs(titles); }
+        if (artists[0]) { setArtists(artists.slice(1)); }
       }
     }
-    setSongs(dbSongs);
   }
+
+  useEffect(() => {
+    getWikiUrls()
+  }, []);
 
   return (
     <div className="listOfSong">
-
-      <Wikipedia title={title} setSongs={setSongs} setArtists={setArtists} />
-
       <ul>
         <p> {`${title} playlist: `} </p>
-
         {songs && songs.map((song) => (
-          <li key={song.song}>
-            {`${song.song}`}
-            {song.artist && (<span> by {song.artist} </span>)}
-          </li>
+          <li>{`${song}`}</li>
         ))}
-
         {!songs && <p className="noPlaylist">Loading...</p>}
-
       </ul>
-
       <SpotifyButton title={title} songs={songs} />
-
     </div>
   );
 }
