@@ -3,7 +3,6 @@ import Movies from '../Movies/movies';
 import './search.css';
 import iconSearch from '../../images/Search-512.webp';
 
-
 function Search() {
   const [searching, setSearching] = useState();
   const [triggerSearch, setTriggerSearch] = useState(0);
@@ -16,21 +15,11 @@ function Search() {
   return (
     <div className="Search">
       <form onSubmit={submittingSearch}>
-        <label>
-          Search:
-          <input className="search" type="text" onChange={(e) => setSearching(e.target.value)} />
-        </label>
+        <label>Search:</label>
+        <input className="search" type="text" onChange={(e) => setSearching(e.target.value)} />
         <img className="searchIcon" src={iconSearch} onClick={submittingSearch} />
       </form>
-      {!searching && triggerSearch === 0 && (
-      <p>
-        <span role="img" aria-label="up">👆</span>
-        {' '}
-        Search a movie up here
-        {' '}
-        <span role="img" aria-label="up">👆</span>
-      </p>
-      )}
+      <p>👆 Search a movie up here 👆</p>
       {triggerSearch !== 0 && <Movies searching={searching} triggerSearch={triggerSearch} />}
     </div>
   );

@@ -3,7 +3,6 @@ import SingleMovie from '../Single movie/singleMovie';
 import { getMovieList } from '../../services/theMovieDbService';
 import './movies.css';
 
-
 function Movies({ searching, triggerSearch }) {
   const [movies, setMovies] = useState();
   const [title, setTitle] = useState();

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import SpotifyLogin from './react-spotify-login/src/SpotifyLogin';
+import React from 'react';
+import SpotifyLogin from 'react-spotify-login';
 import { spotifyClientID } from '../../api-keys';
 import './logins.css';
 
@@ -29,6 +29,5 @@ function Logins({ token, setTokenSpotify }) {
     </div>
   );
 }
-
 
 export default Logins;
