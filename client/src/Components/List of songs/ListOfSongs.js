@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import SpotifyButton from '../Spotify Button/SpotifyButton';
+import React, { useState, useEffect, useContext } from 'react';
+// import SpotifyButton from '../Spotify Button/SpotifyButton';
 import { GetWikiUrls, GetTitlesAndArtists } from '../../services/wikipediaService';
+import SpotifyContext from '../../SpotifyContext';
+import { createPlaylist, searchSongs, addSongs } from '../../services/spotifyService';
 import './ListOfSongs.css';
 
 function ListOfSongs({ title }) {
   const [songs, setSongs] = useState();
   const [artists, setArtists] = useState();
 
+  const spotifyUser = useContext(SpotifyContext);
   const conditions = ['soundtrack', 'music', 'OST', 'Music'];
 
   async function getWikiUrls () {
@@ -26,6 +29,13 @@ function ListOfSongs({ title }) {
     }
   }
 
+  async function addPlaylist () {
+    const playlist = await createPlaylist(spotifyUser.spotifyUserId, title, spotifyUser.tokenSpotify);
+    const songIds = await searchSongs(songs, spotifyUser.tokenSpotify);
+    await addSongs(songIds, playlist.id, spotifyUser.tokenSpotify);
+    console.log('playlist imported successfully');
+  };
+
   useEffect(() => {
     getWikiUrls()
   }, []);
@@ -39,7 +49,12 @@ function ListOfSongs({ title }) {
         ))}
         {!songs && <p className="noPlaylist">Loading...</p>}
       </ul>
-      <SpotifyButton title={title} songs={songs} />
+      {/* <SpotifyButton title={title} songs={songs} /> */}
+      <button
+        className='add-playlist-to-spotify'
+        onClick={addPlaylist}
+      >Export playlist <br/> to Spotify
+      </button>
     </div>
   );
 }
