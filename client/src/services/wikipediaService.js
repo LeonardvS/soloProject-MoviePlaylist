@@ -1,6 +1,22 @@
 const wtf = require('wtf_wikipedia');
 
-function GetWikiUrls (title) {
+async function getTrackList(title, conditions) {
+  const urls = await getWikiUrls(title);
+  const titles = [];
+
+  for (const url of urls) {
+    if (conditions.some((el) => url.includes(el))) {
+      const songs = await getTitles(url);
+
+      for (const key in songs) {
+        if (key.includes('title')) titles.push(songs[key]);
+      }
+    }
+  }
+  return Promise.resolve(titles);
+}
+
+function getWikiUrls (title) {
   const url = `https://en.wikipedia.org/w/api.php?origin=*&action=opensearch&search=${title}&limit=50&namespace=0&format=json`
   return fetch(url)
     .then((response) => response.json())
@@ -8,7 +24,7 @@ function GetWikiUrls (title) {
     .catch((error) => { console.log(error); });
 }
 
-function GetTitles (url) {
+function getTitles (url) {
   return wtf.fetch(url)
     .then((doc) => doc.json())
     .then((doc) => {
@@ -21,4 +37,4 @@ function GetTitles (url) {
     });
 }
 
-module.exports = { GetWikiUrls, GetTitles }
+module.exports = { getTrackList, getTitles, getWikiUrls }
