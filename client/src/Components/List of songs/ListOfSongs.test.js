@@ -1,13 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import renderer from 'react-test-renderer';
+import Enzyme from 'enzyme';
+import { shallow } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import { render, cleanup, act, waitForElement, waitForElementToBeRemoved, screen } from '@testing-library/react';
 import { getTrackList } from '../../services/wikipediaService'
 import ListOfSongs from './ListOfSongs'
 
+Enzyme.configure({ adapter: new Adapter() });
+
 jest.mock('../../services/wikipediaService')
 
-const mockedTrackList = Promise.resolve(
+const mockedTrackList =
   [
     "Desolation Row",
     "Unforgettable",
@@ -22,9 +26,8 @@ const mockedTrackList = Promise.resolve(
     "Ride of the Valkyries",
     "Pirate Jenny"
   ]
-)
 
-getTrackList.mockImplementation(() => mockedTrackList);
+getTrackList.mockResolvedValue(mockedTrackList);
 
 describe('ListOfSongs component', () => {
 
@@ -35,7 +38,7 @@ describe('ListOfSongs component', () => {
     ReactDOM.render(<ListOfSongs />, div);
   });
 
-  it('renders song list', async () => {
+  it('renders all tracks correctly', async () => {
     const component = render(<ListOfSongs />);
     const getByText = component.getByText;
 
@@ -43,10 +46,12 @@ describe('ListOfSongs component', () => {
 
     expect(getByText('Ride of the Valkyries')).toBeInTheDocument();
     expect(getByText('Hallelujah')).toBeInTheDocument();
+    expect(document.querySelectorAll('.track').length).toEqual(mockedTrackList.length);
   });
 
-  it('button triggers addPlaylist function onClick', () => {
-
-  })
+  it('button addPlaylist renders correctly', () => {
+    const wrapper = shallow(<ListOfSongs/>);
+    expect(wrapper.find('.add-playlist-to-spotify')).toHaveLength(1);
+  });
 
 });
