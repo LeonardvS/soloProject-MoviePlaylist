@@ -22,6 +22,7 @@ function Movies({ searching, triggerSearch }) {
           posterPath={movie.poster_path}
           date={movie.release_date}
         />)}
+        {(!movies) && <p className="noMovies">Loading...</p>}
       </div>
       <p className="no-movies">No more movies, if your movie is not in the list try another search</p>
     </div>

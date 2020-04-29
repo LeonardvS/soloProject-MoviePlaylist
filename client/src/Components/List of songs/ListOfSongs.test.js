@@ -9,23 +9,22 @@ import ListOfSongs from './ListOfSongs'
 
 Enzyme.configure({ adapter: new Adapter() });
 
-jest.mock('../../services/wikipediaService')
+jest.mock('../../services/wikipediaService');
 
-const mockedTrackList =
-  [
-    "Desolation Row",
-    "Unforgettable",
-    "The Times They Are a-Changin'",
-    "The Sound of Silence",
-    "Me and Bobby McGee",
-    "I'm Your Boogie Man",
-    "You're My Thrill",
-    "Pruit Igoe and Prophecies",
-    "Hallelujah",
-    "All Along the Watchtower",
-    "Ride of the Valkyries",
-    "Pirate Jenny"
-  ]
+const mockedTrackList = [
+  "Desolation Row",
+  "Unforgettable",
+  "The Times They Are a-Changin'",
+  "The Sound of Silence",
+  "Me and Bobby McGee",
+  "I'm Your Boogie Man",
+  "You're My Thrill",
+  "Pruit Igoe and Prophecies",
+  "Hallelujah",
+  "All Along the Watchtower",
+  "Ride of the Valkyries",
+  "Pirate Jenny"
+];
 
 getTrackList.mockResolvedValue(mockedTrackList);
 
@@ -46,6 +45,7 @@ describe('ListOfSongs component', () => {
 
     expect(getByText('Ride of the Valkyries')).toBeInTheDocument();
     expect(getByText('Hallelujah')).toBeInTheDocument();
+
     expect(document.querySelectorAll('.track').length).toEqual(mockedTrackList.length);
   });
 
@@ -55,3 +55,11 @@ describe('ListOfSongs component', () => {
   });
 
 });
+
+
+
+
+
+
+
+
