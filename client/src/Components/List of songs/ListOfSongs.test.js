@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import Enzyme from 'enzyme';
 import { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import { render, cleanup, act, waitForElement, waitForElementToBeRemoved, screen } from '@testing-library/react';
+import { render, cleanup, waitForElementToBeRemoved } from '@testing-library/react';
 import { getTrackList } from '../../services/wikipediaService'
 import ListOfSongs from './ListOfSongs'
 
