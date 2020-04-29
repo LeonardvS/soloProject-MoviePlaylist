@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { getMovieList } from '../../services/theMovieDbService'
-import { cleanup, render, waitForElementToBeRemoved } from '@testing-library/react';
+import { cleanup, render, waitForElementToBeRemoved, getByText } from '@testing-library/react';
 import Movies from './movies'
 
 jest.mock('../../services/theMovieDbService');
@@ -42,6 +42,14 @@ describe('Movies component', () => {
     expect(queryByText(mockedMovies.results[0].title)).toBeInTheDocument();
     expect(queryByText(mockedMovies.results[1].title)).toBeInTheDocument();
     expect(document.querySelectorAll('.single_movie').length).toEqual(mockedMovies.results.length);
+  });
+
+  it('renders no more movies <p> correctly', async () => {
+    const { queryByText, getByText } = render(<Movies />);
+
+    await waitForElementToBeRemoved(() => getByText('Loading...'));
+
+    expect(queryByText(/No more movies/i)).toBeInTheDocument();
   });
 
 });
