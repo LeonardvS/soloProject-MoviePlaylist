@@ -5,7 +5,7 @@ import { createPlaylist, searchSongs, addSongs } from '../../services/spotifySer
 import './ListOfSongs.css';
 
 function ListOfSongs({ title }) {
-  const [songs, setSongs] = useState();
+  const [songs, setSongs] = useState([]);
   const conditions = ['soundtrack', 'music', 'OST', 'Music'];
   const spotifyUser = useContext(SpotifyContext);
 
@@ -27,7 +27,7 @@ function ListOfSongs({ title }) {
         {songs && songs.map((song, index) => (
           <li key={index}>{`${song}`}</li>
         ))}
-        {!songs && <p className="noPlaylist">Loading...</p>}
+        {(songs.length === 0) && <p className="noPlaylist">Loading...</p>}
       </ul>
       <button
         className='add-playlist-to-spotify'
