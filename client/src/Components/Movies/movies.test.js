@@ -46,9 +46,7 @@ describe('Movies component', () => {
 
   it('renders no more movies <p> correctly', async () => {
     const { queryByText, getByText } = render(<Movies />);
-
     await waitForElementToBeRemoved(() => getByText('Loading...'));
-
     expect(queryByText(/No more movies/i)).toBeInTheDocument();
   });
 

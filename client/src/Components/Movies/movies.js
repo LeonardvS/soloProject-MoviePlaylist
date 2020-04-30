@@ -5,7 +5,7 @@ import './movies.css';
 
 function Movies({ searching, triggerSearch }) {
   const [movies, setMovies] = useState();
-  const [title, setTitle] = useState();
+  // const [title, setTitle] = useState();
 
   useEffect(() => {
     getMovieList(searching)

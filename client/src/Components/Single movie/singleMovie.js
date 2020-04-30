@@ -5,7 +5,7 @@ import './singleMovie.css';
 
 function SingleMovie({ title, posterPath, date }) {
   const [showPlaylist, setShowPlaylist] = useState(false);
-  const showingButtonText = showPlaylist ? 'Hide Playlist' : 'Show playlist';
+  const showingButtonText = showPlaylist ? 'Hide Playlist' : 'Show Playlist';
 
   const openPlaylist = () => setShowPlaylist(!showPlaylist);
 
